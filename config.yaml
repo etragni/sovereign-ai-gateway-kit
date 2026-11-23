@@ -53,7 +53,7 @@ router_settings:
 # filter-in then still blocks secrets and jailbreaks, and masks any IBAN-shaped
 # string that Presidio did not accept as an IBAN.
 guardrails:
-  # Steps 2 and 5 - pseudonymise, then restore: Presidio replaces personal data
+  # Steps 1 and 5 - pseudonymise, then restore: Presidio replaces personal data
   # with placeholders; the placeholder->value map stays inside the gateway process.
   - guardrail_name: tier1-pseudonymise
     litellm_params:
@@ -69,7 +69,7 @@ guardrails:
         IBAN_CODE: MASK
         PHONE_NUMBER: MASK
 
-  # Step 1 - filter in: cheap, local checks on every request.
+  # Step 2 - filter in: cheap, local checks on every request.
   - guardrail_name: filter-in
     litellm_params:
       guardrail: litellm_content_filter

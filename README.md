@@ -14,7 +14,7 @@ that anyone can run the pattern from the slides on their own machine:
 - **One gateway** ([LiteLLM](https://docs.litellm.ai) proxy) with an
   OpenAI-compatible API. Apps ask for an **alias**, never a URL.
 - **Four aliases**, one per job: `reasoning`, `code`, `fast`, `embed`.
-- **Five checks around every model call**: (1) filter in, (2) pseudonymise,
+- **Five checks around every model call**: (1) pseudonymise, (2) filter in,
   (3) route, (4) filter out, (5) restore. The kit configures 1, 2, 3 and 5 (see
   [Limitations](#limitations)).
 - A stand-in "remote model" (`tap`) that shows **exactly what a remote model would
@@ -132,7 +132,7 @@ flowchart TB
   ingress --> p
 
   subgraph gw["litellm: the gateway (internal network, no route out)"]
-    p["step 2: tier1-pseudonymise (Presidio)"] --> f["step 1: filter-in (content filter)"]
+    p["step 1: tier1-pseudonymise (Presidio)"] --> f["step 2: filter-in (content filter)"]
     f --> r["step 3: router (alias, tags, fallback)"]
     r --> back["step 5: restore real values (output_parse_pii)"]
     map[("placeholder map: stays in the gateway")]
